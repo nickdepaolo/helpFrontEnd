@@ -15,15 +15,18 @@ const Router = (props) => {
                     <Routes>
                         <Route path="/" element={
 
-                            <Main 
+                                <Main 
 
-                                watersATrigger={watersATrigger} 
-                                setWatersATrigger={setWatersATrigger} 
-                                
-                                watersAText={watersAText} 
-                                setWatersAText={setWatersAText}/>}
+                                    watersATrigger={watersATrigger} 
+                                    setWatersATrigger={setWatersATrigger} 
+                                    
+                                    watersAText={watersAText} 
+                                    setWatersAText={setWatersAText}
+                                    
+                                />
+                            }
                            
-                            />
+                        />
 
                         <Route path='/WatersA' element={<WatersA setWatersATrigger={setWatersATrigger} watersATrigger={watersATrigger} watersAText={watersAText} setWatersAText={setWatersAText}/>}/>
                     </Routes>
