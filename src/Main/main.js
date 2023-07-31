@@ -7,7 +7,7 @@ const Main = (props) => {
     const isDesktop = useMediaQuery({query: '(min-width: 500px)'})
     const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
   
-
+    //add fetch after server is done
     function helpButton() {
         props.setWatersATrigger(false)
         props.setWatersAText('')

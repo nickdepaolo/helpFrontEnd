@@ -9,6 +9,7 @@ const WatersA = (props) => {
 
     const [userInput, setUserInput] = useState('')
 
+    //add fetches when server done
     function helpButton() {
         props.setWatersATrigger(true)
         helpText()
@@ -23,17 +24,19 @@ const WatersA = (props) => {
         props.setWatersAText('')
     }
 
-    if(isDesktop){return(
-        <div>
-            <h1>Waters A</h1>
-            {props.watersATrigger&& <h1>Assistance Requested</h1>}
-            {props.watersATrigger&& <h1>{userInput}</h1>}            
-            {props.watersATrigger&& <button onClick={cancelHelp}>Cancel Assistance Request</button>}
-            {props.watersATrigger !== true? <button onClick={helpButton}>Request Assistance</button> : ''}
-            {props.watersATrigger !== true? <input id="AHelpInput" placeholder="How can we help you?" autoComplete="off" onChange={(e) => setUserInput(e.target.value)}/> : ''}
+    if(isDesktop){
+        return(
+            <div>
+                <h1>Waters A</h1>
+                {props.watersATrigger&& <h1>Assistance Requested</h1>}
+                {props.watersATrigger&& <h1>{userInput}</h1>}            
+                {props.watersATrigger&& <button onClick={cancelHelp}>Cancel Assistance Request</button>}
+                {props.watersATrigger !== true? <button onClick={helpButton}>Request Assistance</button> : ''}
+                {props.watersATrigger !== true? <input id="AHelpInput" placeholder="How can we help you?" autoComplete="off" onChange={(e) => setUserInput(e.target.value)}/> : ''}
 
-        </div>
+            </div>
     )
+
     }else if(isMobile){
         return(
             <div>
