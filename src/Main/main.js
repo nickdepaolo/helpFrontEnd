@@ -1,8 +1,12 @@
 import React from "react";
-
+import { useMediaQuery } from 'react-responsive'
 import { Link } from "react-router-dom";
 
 const Main = (props) => {
+
+    const isDesktop = useMediaQuery({query: '(min-width: 500px)'})
+    const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
+  
 
     function helpButton() {
         props.setWatersATrigger(false)
@@ -11,7 +15,7 @@ const Main = (props) => {
 
     
 
-    return(
+    if(isDesktop){return(
         <div>
             <h1>Monitor Page</h1>
             <h1>Embassy Noblesville</h1>
@@ -26,6 +30,13 @@ const Main = (props) => {
             {props.watersATrigger === true? (<button onClick={helpButton}>Client Helped</button>) : ('')}
         </div>
     )
+    }else if(isMobile){
+        return(
+            <div>
+
+            </div>
+        )
+    }
 }
 
 export default Main

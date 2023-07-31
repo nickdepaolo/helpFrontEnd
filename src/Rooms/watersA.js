@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const WatersA = (props) => {
+
+    const isDesktop = useMediaQuery({query: '(min-width: 500px)'})
+    const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
+  
 
     const [userInput, setUserInput] = useState('')
 
@@ -18,7 +23,7 @@ const WatersA = (props) => {
         props.setWatersAText('')
     }
 
-    return(
+    if(isDesktop){return(
         <div>
             <h1>Waters A</h1>
             {props.watersATrigger&& <h1>Assistance Requested</h1>}
@@ -29,6 +34,13 @@ const WatersA = (props) => {
 
         </div>
     )
+    }else if(isMobile){
+        return(
+            <div>
+                <h1>Waters A</h1>
+            </div>
+        )
+    }
 }
 
 export default WatersA
