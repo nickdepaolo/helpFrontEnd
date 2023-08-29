@@ -9,9 +9,9 @@ const Main = (props) => {
     const [helpData, setHelpData] = useState('')
     const [helpArray, setHelpArray] = useState([])
 
-    useEffect(() => {
-        let newArray = []
 
+    useEffect(() => {
+        console.log(helpData)
     }, [helpData])
 
     //add fetch after server is done
@@ -25,7 +25,6 @@ const Main = (props) => {
         .then(res => res.json())
         .then(
             json => {setHelpData(json)})
-        .then(console.log(JSON.parse(JSON.stringify(helpData))))
         }catch(err){
             console.log(err)
         }
@@ -45,7 +44,11 @@ const Main = (props) => {
             <h1>{props.watersAText}</h1>
             {props.watersATrigger&& <button onClick={helpButton}>Client Helped</button>}
             <button  onClick={getActiveCalls}>Fetch</button>
-            <h1>{}</h1>
+            {Object.keys(helpData).map((item, i) => (
+                <li key={i}>
+                    <span>key: {i} Name: {helpData[item].clientName}</span>
+                </li>
+            ))}
         </div>
     )
     }else if(isMobile){
