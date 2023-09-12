@@ -4,15 +4,30 @@ import { Link } from "react-router-dom";
 
 const Main = (props) => {
 
-    const isDesktop = useMediaQuery({query: '(min-width: 500px)'})
+    const isDesktop = useMediaQuery({ query: '(min-width: 500px)' })
     const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
-    const [helpData, setHelpData] = useState('')
-    const [helpArray, setHelpArray] = useState([])
+    const refreshCount = useState(0)
 
+    const [helpData, setHelpData] = useState('')
+
+    const apiurl = 'http://localhost:3000/'
+    
+    useEffect(() => {
+        const x = refreshCount
+        
+    }, [])
 
     useEffect(() => {
         console.log(helpData)
     }, [helpData])
+
+    useEffect(() => {
+        getActiveCalls()
+    }, [])
+
+    function refresh() {
+        window.location.reload(true)
+    }
 
     //add fetch after server is done
     function helpButton() {
@@ -30,6 +45,25 @@ const Main = (props) => {
         }
     }
 
+    function deleteRequest(deleteid) {
+        console.log('tried')
+        try{
+            fetch(`${apiurl}help/delete/${deleteid}`, {
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(json=> console.log(json))
+            .then(() => getActiveCalls())
+            .then(refresh())
+        } catch(err) {
+            console.log(err)
+        }
+    };
+
+    function conlog(e) {
+        console.log(e)
+    }
+
     if(isDesktop){return(
         <div>
             <h1>Monitor Page</h1>
@@ -43,11 +77,19 @@ const Main = (props) => {
             {props.watersATrigger&& <h1>Help Waters A</h1>}
             <h1>{props.watersAText}</h1>
             {props.watersATrigger&& <button onClick={helpButton}>Client Helped</button>}
-            <button  onClick={getActiveCalls}>Fetch</button>
+            <br/>
             {Object.keys(helpData).map((item, i) => (
-                <li key={i}>
-                    <span>key: {i} Name: {helpData[item].clientName}</span>
-                </li>
+                <div key={i}>
+                    <span> Name: {helpData[item].clientName}</span>
+                    <br/>
+                    <span>Room: {helpData[item].room}</span>
+                    <br/>
+                    <span>Issue: {helpData[item].issue}</span>
+                    <br/>
+                    <button onClick={() => deleteRequest(helpData[item].id)}>Cancel</button>
+                    <br/>
+                    <br/>
+                </div>
             ))}
         </div>
     )
