@@ -6,40 +6,27 @@ const Main = (props) => {
 
     const isDesktop = useMediaQuery({ query: '(min-width: 500px)' })
     const isMobile = useMediaQuery({ query: '(max-width: 499px)' })
-    const refreshCount = useState(0)
 
     const [helpData, setHelpData] = useState('')
 
     const apiurl = 'http://localhost:3000/'
     
     useEffect(() => {
-        const x = refreshCount
-        
+        const interval = setInterval(() => {
+            getActiveCalls();
+        }, 5*1000);
     }, [])
-
-    useEffect(() => {
-        console.log(helpData)
-    }, [helpData])
 
     useEffect(() => {
         getActiveCalls()
     }, [])
-
-    function refresh() {
-        window.location.reload(true)
-    }
-
-    //add fetch after server is done
-    function helpButton() {
-        props.setWatersATrigger(false)
-        props.setWatersAText('')
-    }
 
     function getActiveCalls() {
         try{fetch('http://localhost:3000/help/')
         .then(res => res.json())
         .then(
             json => {setHelpData(json)})
+        .then(console.log('data fetched'))
         }catch(err){
             console.log(err)
         }
@@ -54,15 +41,13 @@ const Main = (props) => {
             .then(res => res.json())
             .then(json=> console.log(json))
             .then(() => getActiveCalls())
-            .then(refresh())
+            .then(getActiveCalls())
         } catch(err) {
             console.log(err)
         }
     };
 
-    function conlog(e) {
-        console.log(e)
-    }
+   
 
     if(isDesktop){return(
         <div>
@@ -74,10 +59,6 @@ const Main = (props) => {
             <br/>
             <br/>
             <br/>
-            {props.watersATrigger&& <h1>Help Waters A</h1>}
-            <h1>{props.watersAText}</h1>
-            {props.watersATrigger&& <button onClick={helpButton}>Client Helped</button>}
-            <br/>
             {Object.keys(helpData).map((item, i) => (
                 <div key={i}>
                     <span> Name: {helpData[item].clientName}</span>
@@ -86,8 +67,9 @@ const Main = (props) => {
                     <br/>
                     <span>Issue: {helpData[item].issue}</span>
                     <br/>
-                    <button onClick={() => deleteRequest(helpData[item].id)}>Cancel</button>
                     <br/>
+                    <button onClick={() => deleteRequest(helpData[item].id)}>Close</button>
+                    <p>__________________</p>
                     <br/>
                 </div>
             ))}
